@@ -1,0 +1,4 @@
+'use client';
+import { motion } from 'framer-motion'; import { cn } from '@/lib/utils';
+export function Glass({children,className,hover=true}:{children:React.ReactNode;className?:string;hover?:boolean}) { return <motion.div whileHover={hover?{y:-5,scale:1.008}:undefined} transition={{type:'spring',stiffness:260,damping:22}} className={cn('glass rounded-[2rem]',className)}>{children}</motion.div> }
+export function Button({children,className,href,external=false}:{children:React.ReactNode;className?:string;href?:string;external?:boolean}) { const cls=cn('glass inline-flex items-center justify-center gap-2 rounded-full px-5 py-3 text-sm font-semibold transition hover:border-white/35 hover:bg-white/10 active:scale-95',className); return href?<a href={href} className={cls} target={external ? '_blank' : undefined} rel={external ? 'noopener noreferrer' : undefined}>{children}</a>:<button className={cls}>{children}</button> }

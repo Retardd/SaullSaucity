@@ -1,0 +1,10 @@
+@import url('https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=Manrope:wght@400;500;600;700&display=swap');
+@tailwind base; @tailwind components; @tailwind utilities;
+
+:root { --ink:#050407; --plum:#3b1a57; --violet:#b59aca; --line:rgba(218,194,235,.18); --glass:rgba(30,22,40,.58); --mist:rgba(186,145,219,.16); }
+* { box-sizing:border-box } html { scroll-behavior:smooth } body { margin:0; color:#f7f3f8; background:var(--ink); font-family:Manrope, sans-serif; overflow-x:hidden }
+body:before, body:after { content:''; position:fixed; pointer-events:none; z-index:-2; inset:0; background:radial-gradient(circle at 18% 18%,rgba(157,112,196,.29),transparent 32%),radial-gradient(circle at 80% 65%,rgba(102,69,139,.32),transparent 30%),radial-gradient(circle at 50% 105%,rgba(187,151,216,.14),transparent 38%); } body:after { z-index:-1; opacity:.42; background-image:radial-gradient(#eadcff 1px,transparent 1px); background-size:90px 90px; mask-image:linear-gradient(black,transparent 85%); }
+::selection{background:#826199;color:white} ::-webkit-scrollbar{width:7px} ::-webkit-scrollbar-thumb{background:#4f2e67;border-radius:10px}
+.glass { border:1px solid var(--line); background:linear-gradient(135deg,rgba(231,211,246,.12),rgba(141,102,174,.04)); box-shadow:inset 0 1px 0 rgba(255,245,255,.17),0 18px 55px rgba(0,0,0,.32),0 0 34px rgba(175,132,209,.08); backdrop-filter:blur(22px); }
+.title { font-family:'Libre Baskerville',serif; font-style:italic; letter-spacing:-.065em; } .eyebrow { color:#c6a9db; font-family:'DM Mono',monospace; letter-spacing:.18em; font-size:.65rem; text-transform:uppercase }
+.temple { position:absolute; bottom:0; left:50%; width:80%; height:36%; transform:translateX(-50%); opacity:.18; background:linear-gradient(to top,#170c22,transparent),linear-gradient(135deg,transparent 49%,#4c2b60 50%,transparent 51%) 50% 80%/250px 95px repeat-x; filter:blur(.2px); }
