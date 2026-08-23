@@ -2,8 +2,16 @@ import { prisma } from '@/lib/prisma';
 
 export const dynamic = 'force-dynamic';
 
-export async function GET() {
-  return Response.json({ error: 'Use POST' }, { status: 405 });
+export async function GET(req: Request) {
+  // Allow GET for easy browser click - same as POST
+  const { searchParams } = new URL(req.url);
+  const key = searchParams.get('key');
+  const expected = process.env.NEXTAUTH_SECRET || 'zanpakuto-secret';
+  if (key !== expected) {
+    return Response.json({ error: 'Add ?key=YOUR_NEXTAUTH_SECRET to URL' }, { status: 401 });
+  }
+  // forward to POST logic
+  return POST(req);
 }
 
 export async function POST(req: Request) {
