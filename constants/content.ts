@@ -1,7 +1,11 @@
-export const server = { name:'Ꚃ𝑜𝓊𝓁     Ꚃ𝑜𝒸𝒾𝑒𝓉𝓎 | ࣪ ִֶָ☾.', tagline:'A quiet realm for souls who choose their own path.', invite:'https://discord.gg/p9YpD7f5p5', online:'1,284', members:'8,621' };
+export const server = { name:'Ꚃ𝑜𝓊𝓁     Ꚃ𝑜𝒸𝒾𝑒𝓉𝓎 ☾', tagline:'A quiet realm for souls who choose their own path.', invite:'https://discord.gg/jSzVm3r5pn', online:'1,284', members:'8,621' };
 export const nav = [{href:'/',label:'Home'},{href:'/rules',label:'Rules'},{href:'/staff',label:'Staff'},{href:'/members',label:'Souls'},{href:'/join',label:'Discord'},{href:'/faq',label:'FAQ'}];
-export const stats = [{value:'8.6K',label:'kindred souls'},{value:'1.2K',label:'online now'},{value:'24/7',label:'sanctuary open'}];
-export const features = [{title:'A refined circle',text:'Conversations with patience, intention, and a little mystery.'},{title:'Events with soul',text:'Quiet screenings, games, and gatherings made to remember.'},{title:'A place to belong',text:'Find your division, your people, and room to become more.'}];
+export const stats = [{value:'8.6K',label:'Site Visited'},{value:'1.2K',label:'Souls in DC'},{value:'24/7',label:'Live'}];
+export const features = [
+  { title: 'A refined circle', text: 'Conversations with patience, intention, and a little mystery.' },
+  { title: 'Events with soul', text: 'Screenings, games, and gatherings you will remember.' },
+  { title: 'A place to belong', text: 'Find your division, your people, and room to grow.' }
+];
 export const rules = [
   {title:'🤝・1. Respect Everyone',text:'Treat everyone with kindness and respect. Harassment, hate speech, discrimination, or personal attacks are not tolerated.'},
   {title:'💬・2. Keep It Friendly',text:"Friendly banter is encouraged, but don't take it too far. Know your limits and respect others."},
@@ -25,14 +29,19 @@ export const staff: StaffMember[] = [
 ];
 export type Soul = { name:string; user:string; description:string; role:'Special Souls'; tone:string; avatar:string | null };
 export const members: Soul[] = [
-  {name:'Abhinav',user:'@Abhi_nav148',description:'',role:'Special Souls',tone:'from-violet-300 to-fuchsia-700',avatar:'/Pics/abhinav.jpg'},
-  {name:'Alone Boy',user:'@js_alone07',description:'',role:'Special Souls',tone:'from-slate-200 to-violet-700',avatar:'/Pics/aloneboy.jpg'},
-  {name:'Speedy',user:'@anshhh0069',description:'',role:'Special Souls',tone:'from-pink-200 to-purple-800',avatar:'/Pics/Speedy.jpg'},
-  {name:'Redox',user:'@ur._.redox',description:'',role:'Special Souls',tone:'from-purple-200 to-violet-800',avatar:'/Pics/redox.jpg'},
-  {name:'Moon',user:'@uskimau',description:'',role:'Special Souls',tone:'from-zinc-200 to-purple-800',avatar:'/Pics/moon.jpg'},
-  {name:'Kartik',user:'@Kartik207',description:'',role:'Special Souls',tone:'from-violet-200 to-fuchsia-900',avatar:'/Pics/kartik.jpg'},
-  {name:'Jahil doshi',user:'@Jainil_doshi',description:'',role:'Special Souls',tone:'from-indigo-200 to-violet-800',avatar:'/Pics/jahildoshi.jpg'},
-  {name:'Srikar',user:'@srikar_293199',description:'',role:'Special Souls',tone:'from-rose-200 to-fuchsia-800',avatar:'/Pics/srikar.jpg'},
-  {name:'Jay',user:'@ur._.zexo',description:'',role:'Special Souls',tone:'from-slate-100 to-indigo-800',avatar:'/Pics/Jay.jpg'},
+  {name:'Abhinav',user:'@Abhi_nav148',description:'Former 10th Seat of Division 12; genius intellect who prefers to let his experiments speak for him.',role:'Special Souls',tone:'from-violet-300 to-fuchsia-700',avatar:'/Pics/abhinav.jpg'},
+  {name:'Alone Boy',user:'@js_alone07',description:'A lone wanderer who walks the border between World of the Living and Hueco Mundo, searching for a place to belong.',role:'Special Souls',tone:'from-slate-200 to-violet-700',avatar:'/Pics/aloneboy.jpg'},
+  {name:'Speedy',user:'@Samandeep',description:'Fifth Seat of Division 2; flash-step prodigy whose movements are faster than the eye can track, rivaling even the highest-ranking captains.',role:'Special Souls',tone:'from-pink-200 to-purple-800',avatar:'/Pics/Speedy.jpg'},
+  {name:'Redox',user:'@ur._.redox',description:'Vizard who hybridized with Hollow mask; his reiatsu fluctuates between razor-sharp precision and uncontrolled frenzy.',role:'Special Souls',tone:'from-purple-200 to-violet-800',avatar:'/Pics/redox.jpg'},
+  {name:'Moon',user:'@uskimau',description:'Elite Arrancar who abandoned her fracción to seek redemption; herReleased form mirrors the crescent moon that guides lost souls.',role:'Special Souls',tone:'from-zinc-200 to-purple-800',avatar:'/Pics/moon.jpg'},
+  {name:'Kartik',user:'@Kartik207',description:'Vice-Captain of Division 8; master of bakudo who can bind even the most powerful Hollows without incantation.',role:'Special Souls',tone:'from-violet-200 to-fuchsia-900',avatar:'/Pics/kartik.jpg',},
+  {name:'Jahil doshi',user:'@Jainil_doshi',description:'Former Tercera Espada who severed ties with his fracción to protect the innocent; now fights for soul society\'s cause.',role:'Special Souls',tone:'from-indigo-200 to-violet-800',avatar:'/Pics/jahildoshi.jpg',},
+  {name:'Srikar',user:'@srikar_293199',description:'Seat of Division 4; master of hado whose destructive spells can level structures without endangering allies.',role:'Special Souls',tone:'from-rose-200 to-fuchsia-800',avatar:'/Pics/srikar.jpg'},
+  {name:'Jay',user:'@ur._.zexo',description:' seated officer of Division 6; kidou specialist who can bend spells to his will, though he prefers to resolve conflicts with words.',role:'Special Souls',tone:'from-slate-100 to-indigo-800',avatar:'/Pics/Jay.jpg'},
 ];
-export const faqs = [{q:'Who is this community for?',a:'For people who want a thoughtful, welcoming Discord space with an appreciation for anime, art, and genuine conversation.'},{q:'How do I join?',a:'Use the invitation on the Join Us page, read the rules, and introduce yourself when you arrive.'},{q:'Is the server active?',a:'Yes. Our placeholder live widget will be connected to Discord in a future integration phase.'},{q:'How can I contact staff?',a:'Open a support ticket and a member of the team will meet you there.'}];
+export const faqs = [
+  { q: 'Who is this community for?', a: 'People who want a solid Discord space with anime, art, and real conversation.' },
+  { q: 'How do I join?', a: 'Click the invite, read the rules, and say hi when you land.' },
+  { q: 'Is the server active?', a: 'Yes. Live member count coming soon.' },
+  { q: 'How can I contact staff?', a: 'Open a support ticket — someone will pick it up.' }
+];

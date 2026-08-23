@@ -1,0 +1,150 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider  = "postgresql"
+  url       = env("DATABASE_URL")
+  directUrl = env("DIRECT_URL")
+}
+
+enum Role {
+  OWNER
+  ADMIN
+  MOD
+  MEMBER
+}
+
+enum TicketStatus {
+  OPEN
+  IN_PROGRESS
+  CLOSED
+}
+
+model User {
+  id            String    @id @default(cuid())
+  discordId     String    @unique
+  username      String
+  globalName    String?
+  avatar        String?
+  email         String?
+  role          Role      @default(MEMBER)
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+  tickets       Ticket[]
+  galleryItems  GalleryItem[]
+}
+
+model Soul {
+  id          String   @id @default(cuid())
+  name        String
+  user        String   // @handle
+  description String   @db.Text
+  role        String   @default("Special Souls")
+  tone        String
+  avatar      String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([order])
+}
+
+model Staff {
+  id          String   @id @default(cuid())
+  name        String
+  user        String
+  description String   @db.Text
+  role        String
+  tone        String
+  avatar      String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+
+  @@index([order])
+}
+
+model Rule {
+  id        String   @id @default(cuid())
+  title     String
+  text      String   @db.Text
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model Faq {
+  id        String   @id @default(cuid())
+  question  String
+  answer    String   @db.Text
+  order     Int      @default(0)
+  isActive  Boolean  @default(true)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model GalleryItem {
+  id        String   @id @default(cuid())
+  title     String?
+  imageUrl  String
+  tag       String?
+  order     Int      @default(0)
+  authorId  String?
+  author    User?    @relation(fields: [authorId], references: [id], onDelete: SetNull)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  @@index([order])
+}
+
+model Ticket {
+  id          String       @id @default(cuid())
+  userId      String?
+  user        User?        @relation(fields: [userId], references: [id], onDelete: SetNull)
+  subject     String?
+  message     String       @db.Text
+  status      TicketStatus @default(OPEN)
+  discordThreadId String?
+  createdAt   DateTime     @default(now())
+  updatedAt   DateTime     @updatedAt
+
+  @@index([status])
+  @@index([createdAt])
+}
+
+model OwnerProfile {
+  id             String   @id @default("owner_singleton")
+  heroEyebrow    String   @default("")
+  heroTitle      String   @default("The Espada")
+  heroSubtitle   String   @default("The only Espada of our soul society")
+  image          String   @default("/Pics/Sevann.jpg")
+  imageAlt       String   @default("Sevaan")
+  name           String   @default("Sevaan")
+  role           String   @default("Creator of this Community")
+  eyebrow        String   @default("About the creator")
+  title          String   @default("Hounered One")
+  description    String   @db.Text @default("I'm Sevaan — a Full Stack Web Developer and Video Editor. I designed and built the Soul Society website from the ground up, crafting the experience, the visuals, and the community behind it. Passionate about clean code, cinematic edits, and building digital worlds that feel alive.")
+  tags           Json     @default("[\"Poetic\", \"Video Editor\", \"Creator\", \"Full Stack Developer\"]")
+  footer         String   @default("See ya somewhere else ")
+  footerCode     String   @default("Kaiiner.fr")
+  socials        Json     @default("{\"discord\": \"https://discord.com/users/1332000313887952947\", \"instagram\": \"https://www.instagram.com/kaiiner.fr\", \"instagram2\": \"https://www.instagram.com/kawakiwoamekuh\"}")
+  socialEyebrow  String   @default("✮⋆˙")
+  socialTitle    String   @default("Socials")
+  socialSubtitle String   @default("These are my persnoal socials and not related to the society")
+  specialThanks  Json     @default("{\"cardTitle\": \"Special Thanks\", \"name\": \"Chachaa\", \"image\": \"/Pics/chachaa.jpg\", \"role\": \"Special grade Developer\", \"highlights\": [\"Ethical Hacker\", \"Plugin Developer\", \"Web Developer\"]}")
+  updatedAt      DateTime @updatedAt
+  createdAt      DateTime @default(now())
+}
+
+model StatCache {
+  id           String   @id @default("stats_singleton")
+  online       Int      @default(0)
+  totalMembers Int      @default(0)
+  updatedAt    DateTime @updatedAt
+}

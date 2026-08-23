@@ -4,3 +4,7 @@ out
 *.tsbuildinfo
 .env*
 !.env.example
+
+server.log
+public/uploads/
+public/icon.png

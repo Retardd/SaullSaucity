@@ -4,8 +4,9 @@ import { AnimatePresence, motion } from 'framer-motion';
 import { UserRound, X } from 'lucide-react';
 import Image from 'next/image';
 import { useEffect, useState } from 'react';
-import { staff, type StaffMember } from '@/constants/content';
 import { Glass } from '@/components/ui/glass';
+
+type StaffMember = { id: string; name: string; user: string; description: string; role: string; tone: string; avatar: string | null };
 
 function AvatarPlaceholder({ member, large = false }: { member: StaffMember; large?: boolean }) {
   const [imageFailed, setImageFailed] = useState(false);
@@ -37,7 +38,7 @@ function StaffProfileModal({ member, onClose }: { member: StaffMember; onClose: 
   return <motion.div className="fixed inset-0 z-[60] grid place-items-center bg-black/60 p-4 backdrop-blur-md" initial={{ opacity: 0 }} animate={{ opacity: 1 }} exit={{ opacity: 0 }} onMouseDown={onClose}>
     <motion.section role="dialog" aria-modal="true" aria-labelledby="staff-id-name" className="glass relative w-full max-w-md overflow-hidden rounded-[2rem] p-6 text-center shadow-2xl sm:p-8" initial={{ opacity: 0, scale: .94, y: 16, filter: 'blur(8px)' }} animate={{ opacity: 1, scale: 1, y: 0, filter: 'blur(0px)' }} exit={{ opacity: 0, scale: .97, y: 8, filter: 'blur(5px)' }} transition={{ duration: .28, ease: [0.16, 1, 0.3, 1] }} onMouseDown={event => event.stopPropagation()}>
       <div aria-hidden className="pointer-events-none absolute inset-x-0 top-0 h-24 bg-gradient-to-b from-violet-200/15 to-transparent" />
-      <button type="button" onClick={onClose} aria-label="Close staff profile" className="absolute right-5 top-5 grid h-9 w-9 place-items-center rounded-full border border-white/10 bg-white/5 text-white/65 transition hover:bg-white/10 hover:text-white"><X size={16}/></button>
+      <button type="button" onClick={onClose} onMouseDown={e => e.stopPropagation()} aria-label="Close staff profile" className="absolute right-5 top-5 z-10 grid h-9 w-9 cursor-pointer place-items-center rounded-full border border-white/10 bg-white/5 text-white/65 transition hover:bg-white/10 hover:text-white"><X size={16} className="pointer-events-none" /></button>
       <p className="eyebrow relative">Soul Society · Staff Identity</p>
       <div className="relative mx-auto mt-7 w-fit"><AvatarPlaceholder member={member} large/></div>
       <h2 id="staff-id-name" className="title relative mt-6 text-4xl">{member.name}</h2>
@@ -49,6 +50,31 @@ function StaffProfileModal({ member, onClose }: { member: StaffMember; onClose: 
 }
 
 export function StaffDirectory() {
+  const [staff, setStaff] = useState<StaffMember[]>([]);
   const [selectedMember, setSelectedMember] = useState<StaffMember | null>(null);
-  return <><div className="mx-auto grid max-w-6xl gap-4 px-5 md:grid-cols-3">{staff.map(member => <Glass key={member.user} className="overflow-hidden p-0"><button type="button" onClick={() => setSelectedMember(member)} className="block w-full p-6 text-left outline-none focus-visible:ring-2 focus-visible:ring-violet-200/80"><AvatarPlaceholder member={member}/><p className="title mt-12 text-2xl">{member.name}</p><p className="mt-1 text-xs text-white/45">{member.user}</p><p className="mt-4 text-sm text-white/55">{member.description}</p><p className="mt-5 border-t border-white/10 pt-4 text-xs uppercase tracking-widest text-violet-200">{member.role}</p></button></Glass>)}</div><AnimatePresence>{selectedMember && <StaffProfileModal member={selectedMember} onClose={() => setSelectedMember(null)}/>}</AnimatePresence></>;
+
+  useEffect(() => {
+    const load = () => fetch('/api/staff', { cache: 'no-store' }).then(r => r.json()).then(setStaff).catch(() => {});
+    load();
+    const interval = setInterval(load, 3000);
+    const onStorage = (e: StorageEvent) => { if (e.key === 'zanpakuto_update') load(); };
+    const onVisibility = () => { if (document.visibilityState === 'visible') load(); };
+    const onCustom = () => load();
+    window.addEventListener('storage', onStorage);
+    document.addEventListener('visibilitychange', onVisibility);
+    window.addEventListener('zanpakuto:update', onCustom);
+    let bc: BroadcastChannel | null = null;
+    try { bc = new BroadcastChannel('zanpakuto:update'); bc.onmessage = load; } catch {}
+    return () => {
+      clearInterval(interval);
+      window.removeEventListener('storage', onStorage);
+      document.removeEventListener('visibilitychange', onVisibility);
+      window.removeEventListener('zanpakuto:update', onCustom);
+      bc?.close();
+    };
+  }, []);
+
+  if (staff.length === 0) return <div className="mx-auto max-w-6xl px-5 py-10 text-center text-white/40">Loading staff...</div>;
+
+  return <><div className="mx-auto grid max-w-6xl gap-4 px-5 md:grid-cols-3">{staff.map(member => <Glass key={member.id} className="overflow-hidden p-0"><button type="button" onClick={() => setSelectedMember(member)} className="block w-full p-6 text-left outline-none focus-visible:ring-2 focus-visible:ring-violet-200/80"><AvatarPlaceholder member={member}/><p className="title mt-12 text-2xl">{member.name}</p><p className="mt-1 text-xs text-white/45">{member.user}</p><p className="mt-4 text-sm text-white/55">{member.description}</p><p className="mt-5 border-t border-white/10 pt-4 text-xs uppercase tracking-widest text-violet-200">{member.role}</p></button></Glass>)}</div><AnimatePresence>{selectedMember && <StaffProfileModal member={selectedMember} onClose={() => setSelectedMember(null)}/>}</AnimatePresence></>;
 }
